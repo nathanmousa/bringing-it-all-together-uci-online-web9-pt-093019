@@ -61,11 +61,11 @@ class Dog
       AND breed = ?
       SQL
     row = DB[:conn].execute(sql, name, breed)
-    if !row.empty?
+    if row.empty?
+      self.create(:name => name, :breed => breed)
+    else
       dog = self.new_from_db(row[0])
       dog.update
-    else
-      self.create(:name => name, :breed => breed)
     end
   end
 
